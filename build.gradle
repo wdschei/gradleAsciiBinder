@@ -1,0 +1,56 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        ////********************************************************************************
+        //// use local artifacts
+        //// See: https://github.com/jruby-gradle/jruby-gradle-plugin/pull/332
+        ////--------------------------------------------------------------------------------
+        //classpath files("/${gradle.gradleHomeDir}/lib/plugins/jruby-gradle-plugin.jar") // ./gradlew installPlugin
+        //classpath 'org.ysb33r.gradle:grolifant:0.7'
+        //********************************************************************************
+        // use artifacts from the Gradle Plugin repository
+        //--------------------------------------------------------------------------------
+        classpath 'com.github.jruby-gradle:jruby-gradle-plugin:1.5.0'
+        //********************************************************************************
+    }
+}
+
+import com.github.jrubygradle.JRubyExec
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: "com.github.jruby-gradle.base"
+
+dependencies {
+    /* Using the built-in `jrubyExec` configuration to describe the
+     * dependencies our JRubyExec-based tasks will need
+     */
+    jrubyExec "rubygems:colorize:0.7.7+"
+
+    /* Ruby gem I'm trying to use.
+     */
+    jrubyExec 'rubygems:ascii_binder:0.1.15.1'
+}
+
+task printSomePrettyOutputPlease(type: JRubyExec) {
+    group 'JRuby'
+    description "Execute our nice local print-script.rb"
+    script "${projectDir}/print-script.rb"
+}
+
+task asciiBinder(type: JRubyExec) {
+    group 'JRuby'
+    description 'Execute the asciiBinder.rb'
+    environment = [
+            'DIR_IN' : "${project.projectDir}/src/docs/asciidoc",
+            'DIR_OUT': "${project.buildDir}/asciidoc/html5",
+    ]
+    script "${project.projectDir}/src/docs/asciidoc/asciiBinder.rb"
+}
