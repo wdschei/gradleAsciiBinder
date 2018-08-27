@@ -1,0 +1,13 @@
+# Using `ascii_binder` gem with `jruby-gradle-plugin`
+
+This is a
+http://sscce.org/[Short, Self Contained, Correct (Compilable) Example]
+or
+https://stackoverflow.com/help/mcve[Minimal, Complete, and Verifiable example]
+project for working through issues using the `ascii_binder` gem with the `jruby-gradle-plugin`.
+
+After cloning this project, if you execute:
+
+* `./gradlew printSomePrettyOutputPlease`
+
+you will get the standard http://jruby-gradle.org/[JRuby-Gradle] Quick Start output.
